@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">PICKer</string>
+    <string name="plaqueta">Plaqueta</string>
+    <string name="tipo">Tipo</string>
+    <string name="localizacao">Localização</string>
+    <string name="limpar">Limpar</string>
+    <string name="salvar">Salvar</string>
+    <string name="nao_pode_ser_vazio">Não pode ser vazio</string>
+</resources>
