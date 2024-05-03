@@ -4,6 +4,13 @@
     <string name="tipo">Tipo</string>
     <string name="localizacao">Localização</string>
     <string name="limpar">Limpar</string>
-    <string name="salvar">Salvar</string>
+    <string name="save">Salvo</string>
     <string name="nao_pode_ser_vazio">Não pode ser vazio</string>
+    <string name="situacao">Situação</string>
+    <string name="localizado">Localizado</string>
+    <string name="naoLocalizado">Não Localizado</string>
+    <string name="barracao">Barracão</string>
+    <string name="coworking1">Coworking 01</string>
+    <string name="coworking2">Coworking 02</string>
+    <string name="coworking3">Coworking 03</string>
 </resources>

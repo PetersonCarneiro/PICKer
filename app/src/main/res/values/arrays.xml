@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="lacale">
+        <item>@string/barracao</item>
+        <item>@string/coworking1</item>
+        <item>@string/coworking2</item>
+        <item>@string/coworking3</item>
+    </string-array>
+
+
+</resources>
