@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -31,44 +32,15 @@ public class MainActivity extends AppCompatActivity {
         radioGroupStatus = findViewById(R.id.radioGroupStatus);
         spinnerLocale = findViewById(R.id.spinnerLocale);
 
-        spinnerLocale.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView,
-                                       View view,
-                                       int i,
-                                       long l) {
-                String nome = adapterView.getItemAtPosition(i).toString();
-
-                if(nome.equals(getString(R.string.barracao))){
-                    spinnerLocale();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-
-        spinnerLocale();
-
     }
 
-    private void spinnerLocale(){
-        String[] nomes = getResources().getStringArray(R.array.lacale);
 
-        ArrayList<Locale> locales = new ArrayList<>();
-
-        for(int i = 0; i< nomes.length;i++){
-            locales.add(new Locale(nomes[i]));
-        }
-
-
-        spinnerLocale.setAdapter();
-
+    public void popularSpinner(int arrauId){
+        ArrayAdapter<CharSequence> adapter =  ArrayAdapter.createFromResource(this,
+                                                                                arrauId,
+                                                                                        android.R.layout.simple_spinner_item);
+        spinnerLocale.setAdapter(adapter);
     }
-
     public void clean(View view){
         editTextPlate.setText(null);
         editTextLocale.setText(null);
