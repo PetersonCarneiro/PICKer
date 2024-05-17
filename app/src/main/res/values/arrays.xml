@@ -1,11 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="lacale">
+
+    //provisório
+    <integer-array name="plaquetas">
+        <item>@integer/plaqueta1</item>
+        <item>@integer/plaqueta2</item>
+        <item>@integer/plaqueta3</item>
+        <item>@integer/plaqueta4</item>
+        <item>@integer/plaqueta5</item>
+    </integer-array>
+
+    <string-array name="tipos">
+        <item>@string/tipo1</item>
+        <item>@string/tipo2</item>
+        <item>@string/tipo3</item>
+        <item>@string/tipo4</item>
+        <item>@string/tipo5</item>
+    </string-array>
+
+    <string-array name="local">
         <item>@string/barracao</item>
         <item>@string/coworking1</item>
         <item>@string/coworking2</item>
         <item>@string/coworking3</item>
+        <item>@string/coworking4</item>
     </string-array>
 
-
+    <string-array name="status">
+        <item>@string/encontrado1</item>
+        <item>@string/encontrado2</item>
+        <item>@string/encontrado3</item>
+        <item>@string/encontrado4</item>
+        <item>@string/nao_encontrado</item>
+    </string-array>
+    
 </resources>

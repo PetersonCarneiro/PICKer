@@ -1,7 +1,9 @@
 package com.br.picker;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     private RadioGroup radioGroupStatus;
     private Spinner spinnerLocale;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,18 +35,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-    public void popularSpinner(int arrauId){
-        ArrayAdapter<CharSequence> adapter =  ArrayAdapter.createFromResource(this,
-                                                                                arrauId,
-                                                                                        android.R.layout.simple_spinner_item);
-        spinnerLocale.setAdapter(adapter);
-    }
     public void clean(View view){
         editTextPlate.setText(null);
         editTextLocale.setText(null);
         radioGroupStatus.setActivated(false);
-
         editTextPlate.requestFocus();
     }
 

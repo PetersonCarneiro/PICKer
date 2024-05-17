@@ -9,9 +9,39 @@
     <string name="situacao">Situação</string>
     <string name="localizado">Localizado</string>
     <string name="naoLocalizado">Não Localizado</string>
+    <string name="Avançado">Avançado</string>
+    <string name="title_activity_recycler_view_item">recyclerViewItem</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="title_activity_recycle_view_item">RecycleViewItem</string>
+
+    //provisório
+    <integer name="plaqueta1">234434</integer>
+    <integer name="plaqueta2">234577</integer>
+    <integer name="plaqueta3">237566</integer>
+    <integer name="plaqueta4">423434</integer>
+    <integer name="plaqueta5">423532</integer>
+
+    <string name="tipo1">mesa</string>
+    <string name="tipo2">pc</string>
+    <string name="tipo3">cadeira</string>
+    <string name="tipo4">persiana</string>
+    <string name="tipo5">persiana</string>
+
     <string name="barracao">Barracão</string>
     <string name="coworking1">Coworking 01</string>
     <string name="coworking2">Coworking 02</string>
     <string name="coworking3">Coworking 03</string>
-    <string name="Avançado">Avançado</string>
+    <string name="coworking4">Coworking 03</string>
+
+    <string name="encontrado1">Encontrado</string>
+    <string name="encontrado2">Encontrado</string>
+    <string name="encontrado3">Encontrado</string>
+    <string name="encontrado4">Encontrado</string>
+    <string name="nao_encontrado">Não Encontrado</string>
+
 </resources>

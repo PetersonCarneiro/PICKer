@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="false"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/textViewLabelPlaqueta"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/plaqueta" />
+
+        <TextView
+            android:id="@+id/textViewPlaqueta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            android:text="@string/plaqueta"
+            app:layout_constraintStart_toEndOf="@+id/textViewLabelPlaqueta"
+            app:layout_constraintTop_toTopOf="@+id/textViewLabelPlaqueta" />
+
+        <TextView
+            android:id="@+id/textViewLabelType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginLeft="60dp"
+            android:layout_weight="0.1"
+            android:text="@string/tipo"
+            app:layout_constraintStart_toEndOf="@+id/textViewPlaqueta"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="70dp"
+            android:layout_marginLeft="70dp"
+            android:layout_weight="1"
+            android:text="@string/tipo"
+            app:layout_constraintStart_toEndOf="@+id/textViewLabelType" />
+
+        <TextView
+            android:id="@+id/textViewLabelSituaçao"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:text="@string/situacao"
+            app:layout_constraintTop_toBottomOf="@+id/textViewLabelPlaqueta" />
+
+        <TextView
+            android:id="@+id/textViewStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/situacao"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewLabelSituaçao"
+            app:layout_constraintStart_toStartOf="@+id/textViewPlaqueta" />
+
+        <TextView
+            android:id="@+id/textViewLabelLocale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:text="@string/localizacao"
+            app:layout_constraintStart_toStartOf="@+id/textViewLabelType"
+            app:layout_constraintTop_toBottomOf="@+id/textViewLabelType" />
+
+        <TextView
+            android:id="@+id/textViewLocale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/localizacao"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewLabelLocale"
+            app:layout_constraintStart_toStartOf="@+id/textViewType" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
