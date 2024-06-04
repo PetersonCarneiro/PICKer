@@ -43,5 +43,7 @@
     <string name="encontrado3">Encontrado</string>
     <string name="encontrado4">Encontrado</string>
     <string name="nao_encontrado">Não Encontrado</string>
+    <string name="ler_codigo_de_barra">Ler código de barra</string>
+    <string name="inserir_manualmente">Inserir Manualmente</string>
 
 </resources>

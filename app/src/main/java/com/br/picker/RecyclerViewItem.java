@@ -1,10 +1,16 @@
 package com.br.picker;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -19,7 +25,7 @@ public class RecyclerViewItem extends AppCompatActivity {
     private RecyclerView recyclerViewItem;
     private RecyclerView.LayoutManager layoutManager;
     private ItemAdapter itemAdapter;
-    private ArrayList<Item> items;
+    private ArrayList<Item> itemsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,7 @@ public class RecyclerViewItem extends AppCompatActivity {
         recyclerViewItem.setLayoutManager(layoutManager);
         recyclerViewItem.setHasFixedSize(true);
         recyclerViewItem.addItemDecoration(new DividerItemDecoration(this, LinearLayout.VERTICAL));
+
         startingList();
 
         recyclerViewItem.addOnItemTouchListener(
@@ -40,36 +47,63 @@ public class RecyclerViewItem extends AppCompatActivity {
                         recyclerViewItem, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Item item = items.get(position);
+                        Item item = itemsList.get(position);
 
                         Toast.makeText(getApplicationContext(),item.getSituacao(),Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onLongItemClick(View view, int position) {
-                        Item item = items.get(position);
+                        Item item = itemsList.get(position);
 
                         Toast.makeText(getApplicationContext(),item.getLocalizacao(),Toast.LENGTH_SHORT).show();
                     }
                 })
         );
     }
+    ActivityResultLauncher<Intent> launcherNewItem = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if(result.getResultCode()== Activity.RESULT_OK){
+                        Intent intent = result.getData();
+                        Bundle bundle = intent.getExtras();
+
+                        if(bundle!=null){
+                            String plate = bundle.getString(MainActivity.PLATE);
+                            String type = bundle.getString(MainActivity.TYPE);
+                            String status = bundle.getString(MainActivity.STATUS);
+                            String locale = bundle.getString(MainActivity.LOCALE);
+
+
+                            Item item = new Item(plate,type,status,locale);
+
+                            itemsList.add(item);
+
+                            itemAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+            }
+    );
+
 
     public void startingList(){
-        int[] plaquetas = getResources().getIntArray(R.array.plaquetas);
-        String[] tipo = getResources().getStringArray(R.array.tipos);
-        String[] local = getResources().getStringArray(R.array.local);
-        String[] status = getResources().getStringArray(R.array.status);
 
-        items = new ArrayList<>();
+        itemsList = new ArrayList<>();
 
-        for(int cont = 0 ; cont < plaquetas.length; cont++){
-            items.add(new Item(plaquetas[cont],tipo[cont],local[cont],status[cont]));
-        }
-
-        itemAdapter = new ItemAdapter(items);
+        itemAdapter = new ItemAdapter(itemsList);
         recyclerViewItem.setAdapter(itemAdapter);
 
+    }
+
+    public void newItem(View view){
+
+        MainActivity.newItem(this,launcherNewItem);
+    }
+
+    public void about(View view){
+        AboutActivity.about(this);
     }
 
 

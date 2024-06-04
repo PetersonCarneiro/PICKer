@@ -42,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextPlate" />
 
     <EditText
-        android:id="@+id/editTextLocale"
+        android:id="@+id/editTextType"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -62,8 +62,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/localizacao"
-        app:layout_constraintStart_toStartOf="@+id/editTextLocale"
-        app:layout_constraintTop_toBottomOf="@+id/editTextLocale" />
+        app:layout_constraintStart_toStartOf="@+id/editTextType"
+        app:layout_constraintTop_toBottomOf="@+id/editTextType" />
 
     <Button
         android:id="@+id/btClean"
@@ -75,13 +75,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btSave"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonAvancar" />
 
     <Button
         android:id="@+id/btSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="notification"
+        android:onClick="save"
         android:text="@string/save"
         app:layout_constraintEnd_toStartOf="@+id/btClean"
         app:layout_constraintHorizontal_bias="0.5"
@@ -90,7 +90,7 @@
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="50dp"
+        android:layout_width="0dp"
         android:layout_height="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/situacao"
@@ -107,13 +107,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4">
 
         <RadioButton
-            android:id="@+id/radioButtonLocated"
+            android:id="@+id/radioButtonNotFound"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/naoLocalizado" />
 
         <RadioButton
-            android:id="@+id/radioButtonNotFound"
+            android:id="@+id/radioButtonFound"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/localizado" />
@@ -136,11 +136,12 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonAvancar"
         style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:onClick="lista"
         android:text="@string/Avançado"
         android:textAppearance="@style/TextAppearance.AppCompat"
         app:layout_constraintStart_toStartOf="@+id/radioGroupStatus"

@@ -1,23 +1,23 @@
 package com.br.picker;
 
 public class Item {
-    private int plaqueta;
+    private String plaqueta;
     private String tipo;
     private String localizacao;
     private String situacao;
 
-    public Item(int plaqueta, String tipo,String localizacao, String situacao ) {
+    public Item(String plaqueta, String tipo,String localizacao, String situacao ) {
         this.plaqueta = plaqueta;
         this.tipo = tipo;
         this.localizacao = localizacao;
         this.situacao = situacao;
     }
 
-    public int getPlaqueta() {
+    public String getPlaqueta() {
         return plaqueta;
     }
 
-    public void setPlaqueta(int plaqueta) {
+    public void setPlaqueta(String plaqueta) {
         this.plaqueta = plaqueta;
     }
 
