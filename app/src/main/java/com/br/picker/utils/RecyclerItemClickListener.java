@@ -6,7 +6,6 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-
 import androidx.recyclerview.widget.RecyclerView;
 
 public class RecyclerItemClickListener extends RecyclerView.SimpleOnItemTouchListener {
@@ -64,7 +63,6 @@ public class RecyclerItemClickListener extends RecyclerView.SimpleOnItemTouchLis
 
     @Override
     public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-
         return gestureDetector.onTouchEvent(e);
     }
 }

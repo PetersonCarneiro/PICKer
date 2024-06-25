@@ -14,7 +14,7 @@
 
         <TextView
             android:id="@+id/textViewLabelPlaqueta"
-            android:layout_width="60dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/plaqueta" />
@@ -23,12 +23,10 @@
             android:id="@+id/textViewPlaqueta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
             android:layout_weight="1"
             android:text="@string/plaqueta"
-            app:layout_constraintStart_toEndOf="@+id/textViewLabelPlaqueta"
-            app:layout_constraintTop_toTopOf="@+id/textViewLabelPlaqueta" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewLabelPlaqueta" />
 
         <TextView
             android:id="@+id/textViewLabelType"
@@ -38,26 +36,28 @@
             android:layout_marginLeft="60dp"
             android:layout_weight="0.1"
             android:text="@string/tipo"
-            app:layout_constraintStart_toEndOf="@+id/textViewPlaqueta"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/textViewLabelSituaçao"
+            app:layout_constraintTop_toTopOf="@+id/textViewLabelSituaçao" />
 
         <TextView
             android:id="@+id/textViewType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
-            android:layout_marginLeft="70dp"
             android:layout_weight="1"
             android:text="@string/tipo"
-            app:layout_constraintStart_toEndOf="@+id/textViewLabelType" />
+            app:layout_constraintStart_toStartOf="@+id/textViewLabelType"
+            app:layout_constraintTop_toBottomOf="@+id/textViewLabelType" />
 
         <TextView
             android:id="@+id/textViewLabelSituaçao"
-            android:layout_width="60dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginLeft="60dp"
             android:layout_weight="0.3"
             android:text="@string/situacao"
-            app:layout_constraintTop_toBottomOf="@+id/textViewLabelPlaqueta" />
+            app:layout_constraintStart_toEndOf="@+id/textViewLabelPlaqueta"
+            app:layout_constraintTop_toTopOf="@+id/textViewLabelPlaqueta" />
 
         <TextView
             android:id="@+id/textViewStatus"
@@ -65,17 +65,19 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:text="@string/situacao"
-            app:layout_constraintBottom_toBottomOf="@+id/textViewLabelSituaçao"
-            app:layout_constraintStart_toStartOf="@+id/textViewPlaqueta" />
+            app:layout_constraintStart_toStartOf="@+id/textViewLabelSituaçao"
+            app:layout_constraintTop_toBottomOf="@+id/textViewLabelSituaçao" />
 
         <TextView
             android:id="@+id/textViewLabelLocale"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="19dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginLeft="60dp"
             android:layout_weight="0.1"
             android:text="@string/localizacao"
-            app:layout_constraintStart_toStartOf="@+id/textViewLabelType"
-            app:layout_constraintTop_toBottomOf="@+id/textViewLabelType" />
+            app:layout_constraintStart_toEndOf="@+id/textViewLabelType"
+            app:layout_constraintTop_toTopOf="@+id/textViewLabelType" />
 
         <TextView
             android:id="@+id/textViewLocale"
@@ -83,8 +85,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/localizacao"
-            app:layout_constraintBottom_toBottomOf="@+id/textViewLabelLocale"
-            app:layout_constraintStart_toStartOf="@+id/textViewType" />
+            app:layout_constraintStart_toStartOf="@+id/textViewLabelLocale"
+            app:layout_constraintTop_toBottomOf="@+id/textViewLabelLocale" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -3,10 +3,6 @@ package com.br.picker;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ListAdapter;
-import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -48,8 +44,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
         holder.textViewTipo.setText(item.getTipo());
         holder.textViewLocalizacao.setText(item.getLocalizacao());
         holder.textViewSituacao.setText(item.getSituacao());
-
-
     }
 
     @Override

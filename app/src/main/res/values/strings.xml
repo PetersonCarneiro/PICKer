@@ -4,7 +4,7 @@
     <string name="tipo">Tipo</string>
     <string name="localizacao">Localização</string>
     <string name="limpar">Limpar</string>
-    <string name="save">Salvo</string>
+    <string name="save">Salvar</string>
     <string name="nao_pode_ser_vazio">Não pode ser vazio</string>
     <string name="situacao">Situação</string>
     <string name="localizado">Localizado</string>
@@ -42,8 +42,15 @@
     <string name="encontrado2">Encontrado</string>
     <string name="encontrado3">Encontrado</string>
     <string name="encontrado4">Encontrado</string>
+
     <string name="nao_encontrado">Não Encontrado</string>
     <string name="ler_codigo_de_barra">Ler código de barra</string>
     <string name="inserir_manualmente">Inserir Manualmente</string>
+    <string name="excluir">Excluir</string>
+    <string name="add">Add</string>
+    <string name="sobre">Sobre</string>
+    <string name="novo">Novo</string>
+    <string name="alterar">Alterar</string>
+
 
 </resources>

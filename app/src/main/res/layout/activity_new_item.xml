@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".NewItemActivity">
 
     <TextView
         android:id="@+id/textView"
@@ -64,29 +64,6 @@
         android:text="@string/localizacao"
         app:layout_constraintStart_toStartOf="@+id/editTextType"
         app:layout_constraintTop_toBottomOf="@+id/editTextType" />
-
-    <Button
-        android:id="@+id/btClean"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:onClick="clean"
-        android:text="@string/limpar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btSave"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAvancar" />
-
-    <Button
-        android:id="@+id/btSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="save"
-        android:text="@string/save"
-        app:layout_constraintEnd_toStartOf="@+id/btClean"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btClean" />
 
     <TextView
         android:id="@+id/textView4"

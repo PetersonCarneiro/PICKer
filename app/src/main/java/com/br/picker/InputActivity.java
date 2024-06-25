@@ -1,10 +1,10 @@
 package com.br.picker;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class InputActivity extends AppCompatActivity {
 
@@ -16,7 +16,6 @@ public class InputActivity extends AppCompatActivity {
 
     public void btnScan(View view){
         Intent intent = new Intent();
-
     }
 
     public void btnEnter(View view){

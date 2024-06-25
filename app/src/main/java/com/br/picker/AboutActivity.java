@@ -1,11 +1,9 @@
 package com.br.picker;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class AboutActivity extends AppCompatActivity {
 
@@ -21,6 +19,4 @@ public class AboutActivity extends AppCompatActivity {
         activity.startActivity(intent);
 
     }
-
-
 }
