@@ -1,9 +1,10 @@
 package com.br.picker;
 
+import static com.br.picker.InputActivity.RESULTBARCODE;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,24 +17,27 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.journeyapps.barcodescanner.ScanOptions;
+
 
 public class NewItemActivity extends AppCompatActivity {
 
     public static  final String MODO = "MODO";
     public static  final int NOVO = 1;
     public static  final int EDITAR = 2;
-    private int modo;
+    public  static  final int RESULTADO = 3;
+    private static int modo;
 
     private String plaquetaOriginal;
     private String tipoOriginal;
     private String localizacaoOriginal;
     private String situacaoOriginal;
+    private String plaquetaResult;
 
     public static final String PLATE = "PLATE";
     public static final String TYPE = "TYPE";
     public static final String LOCALE = "LOCALE";
     public static final String STATUS = "STATUS";
-
 
     private EditText editTextPlate;
     private EditText editTextType;
@@ -44,7 +48,6 @@ public class NewItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_item);
-
 
         editTextPlate = findViewById(R.id.editTextPlate);
         editTextType = findViewById(R.id.editTextType);
@@ -57,7 +60,7 @@ public class NewItemActivity extends AppCompatActivity {
         if(bundle!= null){
             modo = bundle.getInt(MODO,NOVO);
             if(modo == NOVO){
-                setTitle("Novo Item3");
+                setTitle("Novo Item");
             }else if (modo == EDITAR){
                 setTitle("Editar Item");
 
@@ -70,9 +73,6 @@ public class NewItemActivity extends AppCompatActivity {
                 editTextPlate.setSelection(editTextPlate.getText().length());
                 editTextType.setText(tipoOriginal);
 
-
-                Log.d("Localização", "LocalizaçãoOriginal: " + localizacaoOriginal);
-                // Seleciona o item correto no Spinner
                 for (int i = 0; i < spinnerLocale.getCount(); i++) {
                     if (spinnerLocale.getItemAtPosition(i).toString().equals(localizacaoOriginal)) {
                         spinnerLocale.setSelection(i);
@@ -80,14 +80,19 @@ public class NewItemActivity extends AppCompatActivity {
                     }
                 }
 
-                // Seleciona o RadioButton correto
-                Log.d("Status", "situacaoOriginal: " + situacaoOriginal);
-
                 if (situacaoOriginal.equals(getString(R.string.naoLocalizado))) {
                     radioGroupStatus.setActivated(true);
                     radioGroupStatus.check(R.id.radioButtonNotFound);
                 } else if (situacaoOriginal.equals(getString(R.string.localizado))) {
                     radioGroupStatus.check(R.id.radioButtonFound);
+                }
+
+            }else if(modo == RESULTADO){
+                setTitle("Resultado BarCode");
+
+                if (bundle != null) {
+                    String resultInputBarCode = bundle.getString(RESULTBARCODE);
+                    editTextPlate.setText(resultInputBarCode);
                 }
             }
         }
@@ -117,7 +122,6 @@ public class NewItemActivity extends AppCompatActivity {
     public void cancelar(){
         setResult(Activity.RESULT_CANCELED);
         finish();
-
     }
 
     public void clean(){
@@ -152,17 +156,14 @@ public class NewItemActivity extends AppCompatActivity {
         }
         if(selectRadio == R.id.radioButtonFound){
             status = getString(R.string.localizado);
-
         }
 
         if(status== null || status.trim().isEmpty()){
-            Toast.makeText(this,getString(R.string.situacao)+" - " +getString(R.string.nao_pode_ser_vazio),Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,getString(R.string.situacao) + " - " +getString(R.string.nao_pode_ser_vazio),Toast.LENGTH_SHORT).show();
         return;
         }
 
-
         String selectSpinner = spinnerLocale.getSelectedItem().toString();
-
 
         Intent intent = new Intent();
         intent.putExtra(PLATE,plate);
@@ -191,7 +192,7 @@ public class NewItemActivity extends AppCompatActivity {
         launcher.launch(intent);
     }
 
-    public static void editItem(AppCompatActivity activity, ActivityResultLauncher<Intent>launcher, Item item){
+    public static void editItem(AppCompatActivity activity, ActivityResultLauncher<Intent> launcher, Item item){
 
         Intent intent = new Intent(activity, NewItemActivity.class);
 
@@ -204,4 +205,17 @@ public class NewItemActivity extends AppCompatActivity {
 
         launcher.launch(intent);
     }
+    public static void newResult(AppCompatActivity activity, String resultado){
+
+        Intent intent = new Intent(activity, NewItemActivity.class);
+        intent.putExtra(MODO, RESULTADO);
+        intent.putExtra(RESULTBARCODE, resultado);
+        activity.startActivity(intent);
+    }
+
+
+
+
+
+
 }
