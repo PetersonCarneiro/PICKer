@@ -51,6 +51,10 @@
     <string name="naoLocalizado">Not Located</string>
     <string name="tipo4">shutter</string>
     <string name="inserir_manualmente">" Insert Manually"</string>
+    <string name="warning">Warning</string>
+    <string name="ok">Ok</string>
+    <string name="confirmation">Confirmation</string>
+    <string name="do_you_really_want_to_delete">Do you really want to delete?</string>
 
 
 </resources>

@@ -51,6 +51,10 @@
     <string name="sobre">Sobre</string>
     <string name="novo">Novo</string>
     <string name="alterar">Alterar</string>
+    <string name="warning">Aviso</string>
+    <string name="ok">Ok</string>
+    <string name="confirmation">Confirmação</string>
+    <string name="do_you_really_want_to_delete">Deseja realmente apagar ?</string>
 
 
 </resources>

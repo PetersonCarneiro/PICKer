@@ -17,6 +17,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.br.picker.utils.UtilsGUI;
 import com.journeyapps.barcodescanner.ScanOptions;
 
 
@@ -138,13 +139,15 @@ public class NewItemActivity extends AppCompatActivity {
         String type = editTextType.getText().toString();
 
         if(plate ==  null  || plate.trim().isEmpty()){
-            Toast.makeText(this,getString(R.string.plaqueta)+" - "+getString(R.string.nao_pode_ser_vazio),Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this,getString(R.string.plaqueta)+" - "+getString(R.string.nao_pode_ser_vazio),Toast.LENGTH_SHORT).show();
+            UtilsGUI.alert(this, R.string.nao_pode_ser_vazio);
             editTextPlate.requestFocus();
             return;
         }
 
         if(type == null || type.trim().isEmpty()){
-            Toast.makeText(this,getString(R.string.tipo)+" - "+getString(R.string.nao_pode_ser_vazio),Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this,getString(R.string.tipo)+" - "+getString(R.string.nao_pode_ser_vazio),Toast.LENGTH_SHORT).show();
+            UtilsGUI.alert(this, R.string.nao_pode_ser_vazio);
             editTextType.requestFocus();
             return;
         }
@@ -159,7 +162,8 @@ public class NewItemActivity extends AppCompatActivity {
         }
 
         if(status== null || status.trim().isEmpty()){
-            Toast.makeText(this,getString(R.string.situacao) + " - " +getString(R.string.nao_pode_ser_vazio),Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this,getString(R.string.situacao) + " - " +getString(R.string.nao_pode_ser_vazio),Toast.LENGTH_SHORT).show();
+            UtilsGUI.alert(this,R.string.nao_pode_ser_vazio);
         return;
         }
 

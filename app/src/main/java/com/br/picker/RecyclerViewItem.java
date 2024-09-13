@@ -4,6 +4,7 @@ import static com.br.picker.InputActivity.RESULTBARCODE;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -28,6 +29,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.br.picker.utils.RecyclerItemClickListener;
+import com.br.picker.utils.UtilsGUI;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,8 +75,7 @@ public class RecyclerViewItem extends AppCompatActivity {
                 return true;
             } else {
                 if (idMenuItem == R.id.idMenuDelete) {
-                    deleteItem();
-                    mode.finish();
+                    deleteItem(mode);
                     return true;
                 }
             }
@@ -155,7 +156,7 @@ public class RecyclerViewItem extends AppCompatActivity {
                                 }
                                 posicaoSelecionada = position;
 
-                                view.setBackgroundColor(Color.LTGRAY);
+                                view.setBackgroundColor(Color.GRAY);
 
                                 viewSelecionado = view;
                                 recyclerViewItem.setEnabled(false);
@@ -266,10 +267,31 @@ public class RecyclerViewItem extends AppCompatActivity {
         NewItemActivity.newItem(this, launcherNewItem);
     }
 
-    public void deleteItem() {
-        itemsList.remove(posicaoSelecionada);
+    public void deleteItem( final ActionMode mode) {
 
-        itemAdapter.notifyDataSetChanged();
+
+        Item item = itemsList.get(posicaoSelecionada);
+
+        String msg = getString(R.string.do_you_really_want_to_delete) + "\n" + "\""+ item.getPlaqueta() + "\"";
+
+        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                switch (i){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        itemsList.remove(posicaoSelecionada);
+                        itemAdapter.notifyDataSetChanged();
+                        mode.finish();
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+
+                        break;
+                }
+            }
+        };
+
+        UtilsGUI.ConirmationAlert(this,msg,listener);
     }
 
     private void editItem() {
