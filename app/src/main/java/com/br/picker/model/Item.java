@@ -1,8 +1,17 @@
-package com.br.picker;
+package com.br.picker.model;
+
+
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.util.Comparator;
 
+@Entity
 public class Item {
+    @PrimaryKey(autoGenerate = true)
+    private long id;
+    @NonNull
     private String plaqueta;
     private String tipo;
     private String localizacao;
@@ -25,6 +34,13 @@ public class Item {
         this.tipo = tipo;
         this.localizacao = localizacao;
         this.situacao = situacao;
+    }
+
+    public long getId(){
+        return id;
+    }
+    public void setId(long id){
+        this.id = id;
     }
 
     public String getPlaqueta() {

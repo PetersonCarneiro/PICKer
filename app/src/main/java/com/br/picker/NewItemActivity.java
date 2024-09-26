@@ -17,8 +17,9 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.br.picker.DAO.ItemDatabase;
+import com.br.picker.model.Item;
 import com.br.picker.utils.UtilsGUI;
-import com.journeyapps.barcodescanner.ScanOptions;
 
 
 public class NewItemActivity extends AppCompatActivity {
@@ -27,18 +28,10 @@ public class NewItemActivity extends AppCompatActivity {
     public static  final int NOVO = 1;
     public static  final int EDITAR = 2;
     public  static  final int RESULTADO = 3;
+    public static  final String ID = "ID";
     private static int modo;
 
-    private String plaquetaOriginal;
-    private String tipoOriginal;
-    private String localizacaoOriginal;
-    private String situacaoOriginal;
-    private String plaquetaResult;
-
-    public static final String PLATE = "PLATE";
-    public static final String TYPE = "TYPE";
-    public static final String LOCALE = "LOCALE";
-    public static final String STATUS = "STATUS";
+    private Item itemOriginal;
 
     private EditText editTextPlate;
     private EditText editTextType;
@@ -61,38 +54,38 @@ public class NewItemActivity extends AppCompatActivity {
         if(bundle!= null){
             modo = bundle.getInt(MODO,NOVO);
             if(modo == NOVO){
-                setTitle("Novo Item");
+                setTitle(getString(R.string.new_item));
             }else if (modo == EDITAR){
-                setTitle("Editar Item");
+                setTitle(getString(R.string.edit_item));
 
-                plaquetaOriginal = bundle.getString(PLATE);
-                tipoOriginal = bundle.getString(TYPE);
-                localizacaoOriginal = bundle.getString(LOCALE);
-                situacaoOriginal = bundle.getString(STATUS);
+                long id = bundle.getLong(ID);
 
-                editTextPlate.setText(plaquetaOriginal);
+                ItemDatabase database = ItemDatabase.getDataBase(this);
+
+                itemOriginal = database.itemDao().queryForId(id);
+
+                editTextPlate.setText(itemOriginal.getPlaqueta());
                 editTextPlate.setSelection(editTextPlate.getText().length());
-                editTextType.setText(tipoOriginal);
+                editTextType.setText(itemOriginal.getTipo());
 
                 for (int i = 0; i < spinnerLocale.getCount(); i++) {
-                    if (spinnerLocale.getItemAtPosition(i).toString().equals(localizacaoOriginal)) {
+                    if (spinnerLocale.getItemAtPosition(i).toString().equals(itemOriginal.getLocalizacao())) {
                         spinnerLocale.setSelection(i);
                         break;
                     }
                 }
 
-                if (situacaoOriginal.equals(getString(R.string.naoLocalizado))) {
+                if (itemOriginal.getSituacao().equals(getString(R.string.naoLocalizado))) {
                     radioGroupStatus.setActivated(true);
                     radioGroupStatus.check(R.id.radioButtonNotFound);
-                } else if (situacaoOriginal.equals(getString(R.string.localizado))) {
+                } else if (itemOriginal.getSituacao().equals(getString(R.string.localizado))) {
                     radioGroupStatus.check(R.id.radioButtonFound);
                 }
 
             }else if(modo == RESULTADO){
                 setTitle("Resultado BarCode");
-
+                String resultInputBarCode = bundle.getString(RESULTBARCODE);
                 if (bundle != null) {
-                    String resultInputBarCode = bundle.getString(RESULTBARCODE);
                     editTextPlate.setText(resultInputBarCode);
                 }
             }
@@ -170,12 +163,43 @@ public class NewItemActivity extends AppCompatActivity {
         String selectSpinner = spinnerLocale.getSelectedItem().toString();
 
         Intent intent = new Intent();
-        intent.putExtra(PLATE,plate);
-        intent.putExtra(TYPE,type);
-        intent.putExtra(STATUS,status);
-        intent.putExtra(LOCALE,selectSpinner);
+        ItemDatabase database = ItemDatabase.getDataBase(this);
 
+        if(modo == NOVO || modo == RESULTADO){
+            
+          Item item = new Item(plate,type,status,selectSpinner);
+
+          long newId = database.itemDao().insert(item);
+
+          if(newId <= 0){
+              UtilsGUI.alert(this, R.string.error_trying_to_insert);
+              return;
+          }
+          item.setId(newId);
+          intent.putExtra(ID,item.getId());
+          if(modo == RESULTADO){
+              Toast.makeText(this,R.string.save,Toast.LENGTH_SHORT).show();
+              // Redireciona para a lista de itens ao invés de voltar para InputActivity
+              startActivity(intent);
+              finish();
+          }
+        }else {
+
+            Item itemAlterado= new Item(plate,type,status,selectSpinner);
+
+            itemAlterado.setId(itemOriginal.getId());
+
+            int qtdAlterada = database.itemDao().update(itemAlterado);
+
+            if(qtdAlterada == 0){
+                UtilsGUI.alert(this,R.string.error_tryying_to_change);
+                return;
+            }
+            intent.putExtra(ID,itemAlterado.getId());
+
+        }
         Toast.makeText(this,R.string.save,Toast.LENGTH_SHORT).show();
+
         setResult(Activity.RESULT_OK,intent);
         finish();
     }
@@ -201,11 +225,7 @@ public class NewItemActivity extends AppCompatActivity {
         Intent intent = new Intent(activity, NewItemActivity.class);
 
         intent.putExtra(MODO,EDITAR);
-
-        intent.putExtra(PLATE,item.getPlaqueta());
-        intent.putExtra(TYPE,item.getTipo());
-        intent.putExtra(STATUS, item.getSituacao());
-        intent.putExtra(LOCALE,item.getLocalizacao());
+        intent.putExtra(ID,item.getId());
 
         launcher.launch(intent);
     }

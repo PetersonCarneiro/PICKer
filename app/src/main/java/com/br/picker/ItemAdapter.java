@@ -1,5 +1,6 @@
 package com.br.picker;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +9,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.br.picker.model.Item;
+
 import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> {
+    private Context context;
     private List<Item> list;
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
@@ -25,7 +29,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
 
         }
     }
-    public ItemAdapter(List<Item> list){
+    public ItemAdapter(Context context,List<Item> list){
         this.list = list;
     }
     @NonNull

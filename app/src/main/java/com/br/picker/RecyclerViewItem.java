@@ -15,7 +15,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -28,11 +27,14 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.br.picker.DAO.ItemDatabase;
+import com.br.picker.model.Item;
 import com.br.picker.utils.RecyclerItemClickListener;
 import com.br.picker.utils.UtilsGUI;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class RecyclerViewItem extends AppCompatActivity {
 
@@ -93,6 +95,8 @@ public class RecyclerViewItem extends AppCompatActivity {
         }
     };
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.new_option,menu);
@@ -124,7 +128,7 @@ public class RecyclerViewItem extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler_view_item);
-        setTitle("Lista de Itens");
+        setTitle(getString(R.string.item_list));
 
         recyclerViewItem = findViewById(R.id.recyclerViewItem);
 
@@ -183,14 +187,14 @@ public class RecyclerViewItem extends AppCompatActivity {
                         Bundle bundle = intent.getExtras();
 
                         if (bundle != null) {
-                            String plate = bundle.getString(NewItemActivity.PLATE);
-                            String type = bundle.getString(NewItemActivity.TYPE);
-                            String status = bundle.getString(NewItemActivity.STATUS);
-                            String locale = bundle.getString(NewItemActivity.LOCALE);
 
-                            Item item = new Item(plate, type, locale, status);
+                            long id = bundle.getLong(NewItemActivity.ID);
 
-                            itemsList.add(item);
+                            ItemDatabase database = ItemDatabase.getDataBase(RecyclerViewItem.this);
+
+                            Item itemInsert = database.itemDao().queryForId(id);
+
+                            itemsList.add(itemInsert);
 
                             orderList();
                         }
@@ -208,16 +212,14 @@ public class RecyclerViewItem extends AppCompatActivity {
                         Bundle bundle = intent.getExtras();
 
                         if (bundle != null) {
-                            String plate = bundle.getString(NewItemActivity.PLATE);
-                            String type = bundle.getString(NewItemActivity.TYPE);
-                            String status = bundle.getString(NewItemActivity.STATUS);
-                            String locale = bundle.getString(NewItemActivity.LOCALE);
 
-                            Item item = itemsList.get(posicaoSelecionada);
-                            item.setPlaqueta(plate);
-                            item.setTipo(type);
-                            item.setSituacao(status);
-                            item.setLocalizacao(locale);
+                            long id = bundle.getLong(NewItemActivity.ID);
+
+                            ItemDatabase database = ItemDatabase.getDataBase(RecyclerViewItem.this);
+
+                            Item itemEdit = database.itemDao().queryForId(id);
+
+                            itemsList.set(posicaoSelecionada,itemEdit);
 
                             posicaoSelecionada = -1;
 
@@ -239,7 +241,6 @@ public class RecyclerViewItem extends AppCompatActivity {
                         if (bundle != null) {
                             String resulBarCode = bundle.getString(RESULTBARCODE);
 
-
                             Item item = itemsList.get(posicaoSelecionada);
                             item.setPlaqueta(resulBarCode);
 
@@ -255,11 +256,14 @@ public class RecyclerViewItem extends AppCompatActivity {
 
     public void startingList() {
 
-        itemsList = new ArrayList<>();
+        ItemDatabase database = ItemDatabase.getDataBase(this);
 
-        itemsList.add(new Item("1234","Mesa","Barração","Localizado"));
-
-        itemAdapter = new ItemAdapter(itemsList);
+        if(orderAsc){
+            itemsList = (ArrayList<Item>) database.itemDao().queryAllAscending();
+        }else{
+            itemsList = (ArrayList<Item>) database.itemDao().queryAlLDownward();
+        }
+        itemAdapter = new ItemAdapter(this,itemsList);
         recyclerViewItem.setAdapter(itemAdapter);
     }
 
@@ -270,7 +274,7 @@ public class RecyclerViewItem extends AppCompatActivity {
     public void deleteItem( final ActionMode mode) {
 
 
-        Item item = itemsList.get(posicaoSelecionada);
+       final  Item item = itemsList.get(posicaoSelecionada);
 
         String msg = getString(R.string.do_you_really_want_to_delete) + "\n" + "\""+ item.getPlaqueta() + "\"";
 
@@ -280,9 +284,18 @@ public class RecyclerViewItem extends AppCompatActivity {
 
                 switch (i){
                     case DialogInterface.BUTTON_POSITIVE:
-                        itemsList.remove(posicaoSelecionada);
-                        itemAdapter.notifyDataSetChanged();
-                        mode.finish();
+                        ItemDatabase database = ItemDatabase.getDataBase(RecyclerViewItem.this);
+
+                        int qtdAlterada = database.itemDao().delete(item);
+                        if(qtdAlterada>0){
+                            itemsList.remove(posicaoSelecionada);
+                            itemAdapter.notifyDataSetChanged();
+                            mode.finish();
+
+                        }else{
+                            UtilsGUI.alert(RecyclerViewItem.this,R.string.error_trying_to_delete);
+                        }
+
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
 
