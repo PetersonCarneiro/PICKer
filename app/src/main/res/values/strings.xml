@@ -55,6 +55,12 @@
     <string name="ok">Ok</string>
     <string name="confirmation">Confirmation</string>
     <string name="do_you_really_want_to_delete">Do you really want to delete?</string>
+    <string name="error_trying_to_insert">Error trying to insert!</string>
+    <string name="error_tryying_to_change">Error tryying to change!</string>
+    <string name="error_trying_to_delete">Error trying to delete</string>
+    <string name="item_list">Item List</string>
+    <string name="new_item">New Item</string>
+    <string name="edit_item">Edit Item</string>
 
 
 </resources>

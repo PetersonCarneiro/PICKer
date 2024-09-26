@@ -55,6 +55,12 @@
     <string name="ok">Ok</string>
     <string name="confirmation">Confirmação</string>
     <string name="do_you_really_want_to_delete">Deseja realmente apagar ?</string>
+    <string name="error_trying_to_insert">Erro ao tentar inserir</string>
+    <string name="error_tryying_to_change">Erro ao tentar alterar</string>
+    <string name="error_trying_to_delete">Erro ao tentar deletar</string>
+    <string name="item_list">Lista de Item</string>
+    <string name="new_item">Novo Item</string>
+    <string name="edit_item">Editar Item</string>
 
 
 </resources>
