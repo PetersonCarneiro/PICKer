@@ -61,6 +61,7 @@
     <string name="item_list">Item List</string>
     <string name="new_item">New Item</string>
     <string name="edit_item">Edit Item</string>
+    <string name="list">List</string>
 
 
 </resources>

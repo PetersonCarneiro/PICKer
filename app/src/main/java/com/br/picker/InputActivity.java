@@ -30,6 +30,8 @@ public class InputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input);
 
+        getSupportActionBar().setTitle("");
+
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
     }
@@ -45,7 +47,6 @@ public class InputActivity extends AppCompatActivity {
         launcherBarcode.launch(options);
 
     }
-
     ActivityResultLauncher<ScanOptions> launcherBarcode = registerForActivityResult(new ScanContract(), result ->{
 
         if(result.getContents() != null){
@@ -57,10 +58,20 @@ public class InputActivity extends AppCompatActivity {
     });
 
 
-    public void btnEnter(View view){
+    public void btnList(View view){
+
         Intent intent = new Intent(this, RecyclerViewItem.class);
 
         startActivity(intent);
+    }
+
+    public void btnNewItem(View view){
+
+        Intent intent = new Intent(this, NewItemActivity.class);
+
+        intent.putExtra(NewItemActivity.MODO,NewItemActivity.NOVO);
+        startActivity(intent);
+
     }
     public void handleScanResult(String resultado) {
         // Exibe o diálogo de confirmação
