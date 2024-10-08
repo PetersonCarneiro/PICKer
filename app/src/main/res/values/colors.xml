@@ -3,6 +3,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="backgraund">#2196F3</color>
-    <color name="gradiente01">#49c5b1</color>
-    <color name="gradiente02">#eb553b</color>
+    <color name="gradiente01">#F3E8AF</color>
+    <color name="gradiente02">#12E9C7</color>
 </resources>
