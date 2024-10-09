@@ -62,6 +62,7 @@
     <string name="new_item">Novo Item</string>
     <string name="edit_item">Editar Item</string>
     <string name="list">Lista</string>
+    <string name="user_not_found">Usuário não encontrado</string>
 
 
 </resources>
