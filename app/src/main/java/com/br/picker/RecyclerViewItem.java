@@ -9,12 +9,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Switch;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -32,6 +35,10 @@ import com.br.picker.model.Item;
 import com.br.picker.utils.RecyclerItemClickListener;
 import com.br.picker.utils.UtilsGUI;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -48,9 +55,9 @@ public class RecyclerViewItem extends AppCompatActivity {
 
     public static final String ARQUIVE = "com.br.picker.sharedpreference.PREFERENCE";
 
-    public static  final String ORDER_ASC = "ORDER_ASC";
+    public static final String ORDER_ASC = "ORDER_ASC";
 
-    private  boolean orderAsc = true;
+    private boolean orderAsc = true;
 
 
     private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
@@ -96,10 +103,9 @@ public class RecyclerViewItem extends AppCompatActivity {
     };
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.new_option,menu);
+        getMenuInflater().inflate(R.menu.new_option, menu);
         return true;
     }
 
@@ -107,21 +113,23 @@ public class RecyclerViewItem extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int idMenuItem = item.getItemId();
 
-        if(idMenuItem == R.id.idMenuNew){
-            NewItemActivity.newItem(this,launcherNewItem);
+        if (idMenuItem == R.id.idMenuNew) {
+            NewItemActivity.newItem(this, launcherNewItem);
             return true;
-        }else
-            if(idMenuItem == R.id.menuItemOrder){
-                savePreferenceOrderAsc(!orderAsc);
-                orderList();
-                return true;
-            }else
-                if (idMenuItem == R.id.idMenuAbout){
-                    AboutActivity.about(this);
-                    return true;
-                }else{
-                    return super.onOptionsItemSelected(item);
-                }
+        } else if (idMenuItem == R.id.menuItemOrder) {
+            savePreferenceOrderAsc(!orderAsc);
+            orderList();
+            return true;
+        } else if (idMenuItem == R.id.idMenuCsv) {
+            exportExcel();
+            return true;
+        } else if (idMenuItem == R.id.idMenuAbout) {
+            about(this.getCurrentFocus());
+            return true;
+        }
+        else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -219,7 +227,7 @@ public class RecyclerViewItem extends AppCompatActivity {
 
                             Item itemEdit = database.itemDao().queryForId(id);
 
-                            itemsList.set(posicaoSelecionada,itemEdit);
+                            itemsList.set(posicaoSelecionada, itemEdit);
 
                             posicaoSelecionada = -1;
 
@@ -258,12 +266,12 @@ public class RecyclerViewItem extends AppCompatActivity {
 
         ItemDatabase database = ItemDatabase.getDataBase(this);
 
-        if(orderAsc){
+        if (orderAsc) {
             itemsList = (ArrayList<Item>) database.itemDao().queryAllAscending();
-        }else{
+        } else {
             itemsList = (ArrayList<Item>) database.itemDao().queryAlLDownward();
         }
-        itemAdapter = new ItemAdapter(this,itemsList);
+        itemAdapter = new ItemAdapter(this, itemsList);
         recyclerViewItem.setAdapter(itemAdapter);
     }
 
@@ -271,29 +279,29 @@ public class RecyclerViewItem extends AppCompatActivity {
         NewItemActivity.newItem(this, launcherNewItem);
     }
 
-    public void deleteItem( final ActionMode mode) {
+    public void deleteItem(final ActionMode mode) {
 
 
-       final  Item item = itemsList.get(posicaoSelecionada);
+        final Item item = itemsList.get(posicaoSelecionada);
 
-        String msg = getString(R.string.do_you_really_want_to_delete) + "\n" + "\""+ item.getPlaqueta() + "\"";
+        String msg = getString(R.string.do_you_really_want_to_delete) + "\n" + "\"" + item.getPlaqueta() + "\"";
 
         DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-                switch (i){
+                switch (i) {
                     case DialogInterface.BUTTON_POSITIVE:
                         ItemDatabase database = ItemDatabase.getDataBase(RecyclerViewItem.this);
 
                         int qtdAlterada = database.itemDao().delete(item);
-                        if(qtdAlterada>0){
+                        if (qtdAlterada > 0) {
                             itemsList.remove(posicaoSelecionada);
                             itemAdapter.notifyDataSetChanged();
                             mode.finish();
 
-                        }else{
-                            UtilsGUI.alert(RecyclerViewItem.this,R.string.error_trying_to_delete);
+                        } else {
+                            UtilsGUI.alert(RecyclerViewItem.this, R.string.error_trying_to_delete);
                         }
 
                         break;
@@ -304,13 +312,64 @@ public class RecyclerViewItem extends AppCompatActivity {
             }
         };
 
-        UtilsGUI.ConirmationAlert(this,msg,listener);
+        UtilsGUI.ConirmationAlert(this, msg, listener);
     }
 
     private void editItem() {
         Item item = itemsList.get(posicaoSelecionada);
 
         NewItemActivity.editItem(this, launcherEditItem, item);
+    }
+
+    private void exportExcel(){
+
+        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                switch(i){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        File path = new File(getFilesDir(), "Lists");
+                        if(!path.exists())
+                            path.mkdir();
+
+                        File file = new File(path.getPath()+"/list.csv");
+
+                        try {
+                            FileOutputStream out = new FileOutputStream(file);
+                            StringBuilder data = new StringBuilder();
+                            data.append(getString(R.string.plaqueta)).append(";")
+                                    .append(getString(R.string.tipo)).append(";")
+                                    .append(getString(R.string.localizacao)).append(";")
+                                    .append(getString(R.string.situacao)).append("\n");
+
+                            for (Item item : itemsList) {
+                                data.append(item.getPlaqueta()).append(";")
+                                        .append(item.getTipo()).append(";")
+                                        .append(item.getLocalizacao()).append(";")
+                                        .append(item.getSituacao()).append("\n");
+                            };
+
+
+                            out.write(data.toString().getBytes());
+
+                            out.flush();
+                            out.close();
+
+                        }catch (FileNotFoundException f){
+                            f.printStackTrace();
+                        }catch (IOException e){
+                            e.printStackTrace();
+                        }
+                        Toast.makeText(RecyclerViewItem.this, R.string.donwload_csv,Toast.LENGTH_LONG).show();
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
+                }
+            }
+        };
+
+        UtilsGUI.ExportAlert(this, getString(R.string.confirmation),listener);
+
     }
 
     private void resultItem() {
@@ -326,26 +385,26 @@ public class RecyclerViewItem extends AppCompatActivity {
 
     }
 
-    private void orderList(){
-        if(orderAsc){
-            Collections.sort(itemsList,Item.comparatorAsc);
-        }else{
-            Collections.sort(itemsList,Item.comparatorDsc);
+    private void orderList() {
+        if (orderAsc) {
+            Collections.sort(itemsList, Item.comparatorAsc);
+        } else {
+            Collections.sort(itemsList, Item.comparatorDsc);
         }
         itemAdapter.notifyDataSetChanged();
     }
 
-    private void readPreferenceOrderAsc(){
+    private void readPreferenceOrderAsc() {
         SharedPreferences shared = getSharedPreferences(ARQUIVE, Context.MODE_PRIVATE);
-        orderAsc = shared.getBoolean(ORDER_ASC,orderAsc);
+        orderAsc = shared.getBoolean(ORDER_ASC, orderAsc);
     }
 
-    private void savePreferenceOrderAsc(boolean newValue){
-        SharedPreferences shared = getSharedPreferences(ARQUIVE,Context.MODE_PRIVATE);
+    private void savePreferenceOrderAsc(boolean newValue) {
+        SharedPreferences shared = getSharedPreferences(ARQUIVE, Context.MODE_PRIVATE);
 
         SharedPreferences.Editor editor = shared.edit();
 
-        editor.putBoolean(ORDER_ASC,newValue);
+        editor.putBoolean(ORDER_ASC, newValue);
 
         orderAsc = newValue;
     }
