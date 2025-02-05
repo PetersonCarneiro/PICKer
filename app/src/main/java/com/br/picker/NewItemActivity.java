@@ -23,16 +23,13 @@ import com.br.picker.utils.UtilsGUI;
 
 
 public class NewItemActivity extends AppCompatActivity {
-
     public static  final String MODO = "MODO";
     public static  final int NOVO = 1;
     public static  final int EDITAR = 2;
     public  static  final int RESULTADO = 3;
     public static  final String ID = "ID";
     private static int modo;
-
     private Item itemOriginal;
-
     private EditText editTextPlate;
     private EditText editTextType;
     private RadioGroup radioGroupStatus;
@@ -123,7 +120,6 @@ public class NewItemActivity extends AppCompatActivity {
         editTextType.setText(null);
         radioGroupStatus.setActivated(false);
         editTextPlate.requestFocus();
-
     }
 
     public void save(){
@@ -167,7 +163,7 @@ public class NewItemActivity extends AppCompatActivity {
 
         if(modo == NOVO || modo == RESULTADO){
             
-          Item item = new Item(plate,type,status,selectSpinner);
+          Item item = new Item(plate,type,selectSpinner,status);
 
           long newId = database.itemDao().insert(item);
 
@@ -177,6 +173,7 @@ public class NewItemActivity extends AppCompatActivity {
           }
           item.setId(newId);
           intent.putExtra(ID,item.getId());
+
           if(modo == RESULTADO){
               Toast.makeText(this,R.string.save,Toast.LENGTH_SHORT).show();
               // Redireciona para a lista de itens ao invés de voltar para InputActivity
@@ -205,6 +202,7 @@ public class NewItemActivity extends AppCompatActivity {
     }
 
     public void lista(View viem){
+
         Intent intent = new Intent(this,RecyclerViewItem.class);
 
         startActivity(intent);
@@ -235,11 +233,6 @@ public class NewItemActivity extends AppCompatActivity {
         intent.putExtra(MODO, RESULTADO);
         intent.putExtra(RESULTBARCODE, resultado);
         activity.startActivity(intent);
+
     }
-
-
-
-
-
-
 }

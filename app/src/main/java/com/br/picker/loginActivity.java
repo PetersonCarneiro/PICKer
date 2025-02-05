@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -30,8 +31,9 @@ public class loginActivity extends AppCompatActivity {
         String userName = editUserName.getText().toString();
         String password = editPassword.getText().toString();
 
-        String nomeRegister  = "Peterson";
-        String passRegister = "1234";
+        String nomeRegister  = "1";
+        String passRegister = "1";
+
 
         if(userName == null || userName.trim().isEmpty()){
             Toast.makeText(this,R.string.nao_pode_ser_vazio,Toast.LENGTH_LONG).show();
@@ -55,6 +57,12 @@ public class loginActivity extends AppCompatActivity {
             Intent intent = new Intent(this, InputActivity.class);
             startActivity(intent);
         }
+    }
+
+    public void registration(View view){
+
+        Intent intent = new Intent(this,SignupActivity.class);
+        startActivity(intent);
     }
 
 }
